@@ -1,0 +1,333 @@
+@import url('https://fonts.googleapis.com/css?family=Be+Vietnam:300i,400,600i&display=swap');
+
+/* =================VARIABLES================= */
+$box-shadow: 0 3px 2px #777;
+$border: 1px solid #f1f1f1;
+$color: #50C878;
+$background-color: #fafafa;
+$background-color-hover: #f9f9f9;
+$svg-color: #b4b4b4;
+
+
+/* =================GLOBAL RESET================= */
+*, *::after, *::before{
+    margin: 0;
+    padding: 0;
+    box-sizing: inherit;
+}
+
+html{
+    font-size: 62.5%;
+}
+
+body{
+    box-sizing: border-box;
+    font-family: 'Be Vietnam', sans-serif;
+    line-height: 1;
+    color:	#4d4d4d;
+    font-weight: 300;
+    font-size: 2rem;
+    background-color: $background-color;
+    padding: 0px 10vh;
+}
+
+ul{
+    margin: 0;
+    padding: 0;
+
+    li{
+        list-style-type: none;
+    }
+}
+
+
+/* =================MIXINS================= */
+@mixin modal(){
+    box-shadow: $box-shadow;
+    position: absolute;
+    width: 100%;
+    border-radius: .3rem;
+}
+
+@mixin add(){
+    display: inline-block;
+    color: gray;
+    font-size: 2rem;
+    margin-left: 1rem;
+}
+
+@mixin add-icon(){
+    color: $color;
+    font-size: 1.5rem;
+}
+
+@mixin input(){
+    width: 100%;
+    border: $border;
+    border-radius: .3rem;
+    height: 3rem;
+    padding: .5rem 1rem;
+}
+
+@mixin button($width){
+    width: $width;
+    background-color: $color;
+    border: 1px solid transparent;
+    color: white;
+    margin: 1rem .5rem;
+    font-weight: bold;
+    font-size: 1.4rem;
+    line-height: 1.5rem;
+    padding: .5rem 1rem;
+    position: relative;
+    display: inline-block;
+    border-radius: .3rem;
+    text-decoration: none;
+    text-align: center;
+    cursor: pointer;
+}
+
+@mixin cancel(){
+    color: #555;
+    font-size: 1.5rem;
+    margin: .2rem .5rem;
+    font-weight: normal;
+    cursor: pointer;
+}
+
+
+/* =================MAIN PAGE================= */
+.page{
+    display: flex;
+}
+
+
+/* =================SIDEBAR================= */
+.sidebar{
+    width: 35vh;
+    height: 100vh;
+    padding-top: 7rem;
+    border-right: $border;
+    background-color: $background-color;
+
+    li{
+        padding: 1rem;
+        list-style-type: none;
+        display: flex;
+        cursor: pointer;
+        line-height: 2rem;
+
+        &:hover .sidebar__list-delete{
+            display: inline-block;
+            margin-right: 0;
+        }
+
+        &:hover, &.active{
+            background-color: white;
+            font-weight: bold;
+        }
+    }
+
+    &__list{
+        padding: 1rem .5rem;
+        display: flex;
+        justify-content: space-between;
+
+        &-delete{
+            display: none;
+
+            &.active{
+                display: inline-block;
+                margin-right: 0; 
+            }
+
+            svg{
+                color: $svg-color;
+            }
+        }
+    }
+
+    .sidebar__list-dropdown{
+        display: flex;
+        align-content: center;
+        padding-left: .5rem;
+        cursor: pointer;
+        padding-bottom: 2rem;
+        border-bottom: $border;
+        
+
+        span{
+            display: flex;
+            padding-right: 1rem;
+            
+            svg{
+                align-self: flex-end;
+                transition: transform .5s;
+
+                &.hide-lists{
+                    transform: rotate(-90deg);
+                }
+            }
+        }
+
+        h2{
+            color: $color;
+            font-weight: bold;
+        }
+    }
+}
+
+.addList{
+    padding: 0 1rem;
+    margin-top: 2rem;
+    cursor: pointer;
+
+    &__content{
+        margin-bottom: 2rem;
+    }
+
+    &__input{
+        @include input();
+    }
+
+    &__text{
+        @include add();
+    }
+
+    &__icon{
+        @include add-icon();
+    }
+
+    &__button{
+        @include button(7rem);
+    }
+
+    &__cancel{
+        @include cancel();
+    }
+}
+
+.delete-modal{
+    position: relative;
+
+    &__content{
+        @include modal();
+        z-index: 100;
+        width: 15vw;
+        padding: .5rem;
+        top: 1rem;
+        right: 0;
+        background-color: white;
+
+        p{
+            margin-bottom: .5rem;
+            line-height: normal;
+            font-weight: normal;
+            font-size: 1.5rem;
+        }
+
+        button{
+            @include button(7rem);
+        }
+
+        span{
+            @include cancel();
+        }
+    } 
+}
+
+
+/* =================TASKS================= */
+.tasks{
+    width: 60vw;
+    height: 100vh;
+    background-color: white;
+    border-right: $border;
+    padding: 4rem;
+
+    &__filter-current, &__filter-done{
+        @include button(8rem);
+        margin: 0;
+        border-radius: 0px;
+        background-color: transparent;
+        color: $color;
+        border: 1px solid $color;
+        margin-bottom: 2rem;
+
+        &.active{
+            background-color: $color;
+            color: white;
+        }
+
+        &:focus{
+            outline: none;
+        }
+    }
+
+    &__filter-delete, &__filter-restore{
+        @include button(8rem);
+        margin-top: 5rem;
+    }
+
+    & .list-name{
+        font-size: 3rem;
+        font-weight: normal;
+        margin-bottom: 2rem;
+    }
+
+    &__list-done{
+        text-decoration: line-through;
+        opacity: .5;
+    }
+
+    &__list li{
+        display: flex;
+        line-height: 2rem;
+        font-size: 1.6rem;
+        padding: .5rem;
+        border-bottom: $border;
+    }
+
+    & .checkbox-div{
+        margin-right: 2rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .checkbox{
+            cursor: pointer;
+            height: 1.6rem;
+            width: 1.6rem;
+        }
+    }
+}
+
+.addTask{
+    padding: 0 1rem;
+    margin-top: 2rem;
+    cursor: pointer;
+
+    &__content{
+        margin-bottom: 2rem;
+    }
+
+    &__input{
+        @include input();
+    }
+
+    &__text{
+        @include add();
+    }
+
+    &__icon{
+        @include add-icon();
+    }
+
+    &__button{
+        @include button(7rem);
+    }
+
+    &__cancel{
+        @include cancel();
+    }
+}
