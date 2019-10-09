@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {FaTrashAlt} from 'react-icons/fa';
 import unsubscribeFirebase from '../../firebase';
 
-function List({id}) {
+function List({id, select}) {
     const [modalConfirm, setModalConfirm] = useState(false); 
 
     const deleteList = async listId => {
@@ -17,6 +17,8 @@ function List({id}) {
         await unsubscribeFirebase('lists')
           .doc(listId)
           .delete();
+
+          select();
       } catch (error) {
         console.log(error);
       }

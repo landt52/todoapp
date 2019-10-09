@@ -8,7 +8,10 @@ export default function Sidebar({select, lists, active, changed, input}) {
     
     return (
       <div className='sidebar'>
-        <div className='sidebar__list-dropdown' onClick={() => setShow(!show)}>
+        <div className='sidebar__list-dropdown' onClick={() => {
+          select();
+          setShow(!show)
+        }}>
           <span>
             <FaChevronCircleDown className={!show && 'hide-lists'}/>
           </span>
@@ -27,7 +30,7 @@ export default function Sidebar({select, lists, active, changed, input}) {
               }
             >
               {list.listName}
-              <List id={list.docId} />
+              <List id={list.docId} select={select} />
             </li>
           ))}
         </ul>

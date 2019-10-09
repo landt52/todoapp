@@ -48,12 +48,15 @@ class Page extends Component {
     }
 
     selectList = e => {
-        this.setState({ 
+        e ? this.setState({ 
             selectedList: e.target.getAttribute('value'),
             selectedListName: e.target.textContent
         }, () => {
             this.getTasks(this.state.selectedList)
-        });
+        }) : this.setState({
+            selectedList: '',
+            selectedListName: ''
+        })
     }
 
     input = (value, type) => {
