@@ -6,7 +6,7 @@ function AddTask({list, changed, input}) {
     const [showAdd, setShowAdd] = useState(false);
 
     const addTask = (task) => {
-        if(list){
+        if(list && task){
             unsubscribeFirebase('tasks')
               .add({
                 done: false,

@@ -18,7 +18,7 @@ function List({id, select}) {
           .doc(listId)
           .delete();
 
-          select();
+        select();
       } catch (error) {
         console.log(error);
       }
@@ -42,7 +42,7 @@ function List({id, select}) {
           <FaTrashAlt />
         </span>
         {modalConfirm && (
-          <div className='delete-modal'>
+          <div className='delete-modal' onClick={(e) => e.stopPropagation()}>
             <div className='delete-modal__content'>
               <p>Are you sure you want to delete this list?</p>
               <button onClick={() => deleteList(id)}>Delete</button>

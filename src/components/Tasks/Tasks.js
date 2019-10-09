@@ -3,7 +3,7 @@ import Checkbox from '../Checkbox/Checkbox';
 import AddTask from '../AddTask/AddTask';
 import unsubscribeFirebase from '../../firebase';
 
-export default function Tasks({tasks, doneTasks, listName, list, changed, input}) {
+export default function Tasks({tasks, doneTasks, namesList, list, changed, input}) {
     const [filter, setFilter] = useState('current');
     const [checkedTasks, setcheckedTasks] = useState([]);
 
@@ -37,7 +37,7 @@ export default function Tasks({tasks, doneTasks, listName, list, changed, input}
 
     return (
       <div className='tasks'>
-        <h2 className='list-name'>{listName}</h2>
+        <h2 className='list-name'>{namesList[list]}</h2>
         {list && (
           <div>
             <button

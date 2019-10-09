@@ -9,7 +9,7 @@ class Page extends Component {
         tasks: [],
         doneTasks: [],
         selectedList: '',
-        selectedListName: '',
+        namesList: [],
         listInput: '',
         taskInput: ''
     }
@@ -18,19 +18,24 @@ class Page extends Component {
         this.getLists();
     }
 
-    getLists = () => {
+    getLists = async () => {
         unsubscribeFirebase('lists')
             .onSnapshot(snapShot => {
-                const newLists = snapShot.docs.map(list => ({
-                    docId: list.id,
-                    ...list.data()
+                const lists = snapShot.docs.map(list => ({
+                  docId: list.id,
+                  ...list.data()
                 }));
 
-                this.setState({lists: newLists})
+                const namesList = {};
+                lists.forEach(list => {
+                  namesList[list.docId] = list.listName;
+                });
+
+                this.setState({lists, namesList})
             })
     }
 
-    getTasks = (listId) => {
+    getTasks = async listId => {
         unsubscribeFirebase('tasks')
             .where('listId', '==', listId)
             .onSnapshot(snapShot => {
@@ -49,13 +54,11 @@ class Page extends Component {
 
     selectList = e => {
         e ? this.setState({ 
-            selectedList: e.target.getAttribute('value'),
-            selectedListName: e.target.textContent
+            selectedList: e.target.getAttribute('value')
         }, () => {
             this.getTasks(this.state.selectedList)
         }) : this.setState({
-            selectedList: '',
-            selectedListName: ''
+            selectedList: ''
         })
     }
 
@@ -79,8 +82,8 @@ class Page extends Component {
             <Tasks
               tasks={this.state.tasks}
               doneTasks={this.state.doneTasks}
+              namesList={this.state.namesList}
               list={this.state.selectedList}
-              listName={this.state.selectedListName}
               changed={this.input}
               input={this.state.taskInput}
             />
